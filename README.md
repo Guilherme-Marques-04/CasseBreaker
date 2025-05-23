@@ -1,4 +1,4 @@
-# CasseBreaker
+<h1 align="center">:CasseBreaker</h1>
 
 ## Description
 Jeu de casse-brique traditionnel, avec des bonus pour pimenter l’expérience de jeu.
