@@ -20,10 +20,12 @@ Le joueur contrôle une barre qui se déplace horizontalement ↔️.
 La barre devient plus large pendant quelques secondes, ce qui facilite la récupération de la balle.
 
 ### Balle supplémentaire
-Une nouvelle balle entre en jeu, accélérant la destruction des briques… mais augmentant aussi la difficulté !
+Une nouvelle balle entre en jeu, accélérant la destruction des briques… mais augmentant aussi la difficultée !
+
+### Autres
+D'autres bonus seront ajouter au cours du projet.
 
 ## Interface
-
 ### Menu principal
 Dans le menu principal, vous avez deux possibilités :  
 1. **Jouer** : lance une partie.  
@@ -40,4 +42,4 @@ Dans le menu pause, vous avez deux options :
 Ce jeu a été développé en **Scala**, avec la librairie **gdx2d** pour la partie graphique.
 
 ### Résolution
-La fenêtre utilise une résolution fixe qui ne peut pas être modifiée.
+La fenêtre utilise une résolution fixe de 1920x1080 qui ne peut pas être modifiée.
