@@ -1,3 +1,31 @@
 # ReadMe :
   Comporter un ou plusieurs screenshots
   Comporter une vidéo (en 1080p) de votre jeu. Max 15 secondes.
+
+# Contraintes :
+    Utiliser une taille de fenêtre fixe, de taille 1920x1080, pas de full-screen
+    Eviter la physique à moins que cela soit indispensable
+
+# Rapport :
+  Page de titre avec date, membres du groupe
+  Introduction et problématique
+  Documentation des choix d'implémentation et des variations effectuées par rapport à la donnée. Cette documentation peut être sous la forme de texte, diagrammes UML, screenshots etc... Vous pouvez mettre des portions de code dans votre rapport mais pas le code complet (en annexe). Merci de mettre votre code en forme dans votre rapport.
+  Ajouter les sources 
+  Les problèmes rencontrés et les solutions apportées.
+  Une description de ce qui fonctionne et ce qui ne fonctionne pas.
+  Des propositions d'améliorations et une auto-critique sur le projet (déroulement, découpage, réalisation en groupe)
+  Une conclusion
+  Le code complet (en annexe).
+  Si vous le souhaitez, vous pouvez utiliser le template isc-hei-report sur Typst.app ou en Typst natif.
+
+# Fin Rapport :
+  Format PDF
+  Max 25 pages (sans annexes)
+  Ajouter si utilisation de ChatGPT
+
+# Code 
+  Ajouter des commentaires
+
+# Tâche 1
+  Comprendre la lib. GDX2D
+  Structuration du projet
