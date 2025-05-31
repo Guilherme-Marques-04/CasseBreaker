@@ -9,6 +9,7 @@ class Bar(var posX: Int, var posY: Int, var height: Int, var width: Int, var col
   var moveLeft: Boolean = false
   var moveRight: Boolean = false
 
+  //update position
   def updateBar(): Unit = {
     if (moveLeft && posX > 0 + width/2)
       posX -= speed
@@ -24,6 +25,7 @@ class Bar(var posX: Int, var posY: Int, var height: Int, var width: Int, var col
     }
   }
 
+
   def onKeyUp(keycode: Int): Unit = {
     keycode match {
       case Input.Keys.LEFT => moveLeft = false
@@ -32,6 +34,7 @@ class Bar(var posX: Int, var posY: Int, var height: Int, var width: Int, var col
     }
   }
 
+  //draw bar
   override def draw(g: GdxGraphics): Unit = {
     g.drawFilledRectangle(posX , posY, height, width, 90, color)
   }

@@ -19,6 +19,7 @@ class Game extends PortableApplication(1920, 1080) {
   var window : Game = this
 
   val bar = new Bar(800, 100, 20, 250, Color.WHITE)
+  val block: ArrayBuffer[Block] = new Block(0, 0, 0, 0, Color.RED).generateBlocks()
 
   var balls: ArrayBuffer[Ball] = new ArrayBuffer
   balls.addOne(new Ball(960, 540, 10, Color.RED))
@@ -57,6 +58,11 @@ class Game extends PortableApplication(1920, 1080) {
 
     bar.updateBar()
     bar.draw(g)
+
+    //draw all blocks
+    for(i <- block){
+      i.draw(g)
+    }
 
     // Draw all balls
     balls.foreach(ball => ball.draw(g))
