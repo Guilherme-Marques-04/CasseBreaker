@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 
+import scala.collection.mutable.ArrayBuffer
+
 object Game {
   def main(args: Array[String]): Unit = {
     new Game
@@ -14,7 +16,15 @@ object Game {
 
 class Game extends PortableApplication(1920, 1080) {
 
+  var window : Game = this
+
   val bar = new Bar(800, 100, 20, 250, Color.WHITE)
+
+  var balls: ArrayBuffer[Ball] = new ArrayBuffer
+  balls.addOne(new Ball(960, 540, 10, Color.RED))
+
+  // timer declaration
+  var timer = new java.util.Timer()
 
   override def onInit(): Unit = {
     Gdx.input.setInputProcessor(new InputAdapter {
@@ -28,6 +38,17 @@ class Game extends PortableApplication(1920, 1080) {
         true
       }
     })
+
+    // Timer instantiation
+    val task = new java.util.TimerTask {
+      // Timer action at each interval
+      def run() = {
+        balls.foreach(ball => ball.updateBall(window.getWindowWidth, window.getWindowHeight))
+      }
+    }
+
+    // timer
+    timer.schedule(task, 2L, 2L)
   }
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
@@ -36,5 +57,8 @@ class Game extends PortableApplication(1920, 1080) {
 
     bar.updateBar()
     bar.draw(g)
+
+    // Draw all balls
+    balls.foreach(ball => ball.draw(g))
   }
 }
