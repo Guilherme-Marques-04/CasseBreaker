@@ -5,9 +5,9 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 
 class Bar(var posX: Int, var posY: Int, var height: Int, var width: Int, var color: Color) extends Drawable {
-  val speed: Int = 20
-  var moveLeft: Boolean = false
-  var moveRight: Boolean = false
+  private val speed: Int = 20
+  private var moveLeft: Boolean = false
+  private var moveRight: Boolean = false
 
   //update position
   def updateBar(): Unit = {

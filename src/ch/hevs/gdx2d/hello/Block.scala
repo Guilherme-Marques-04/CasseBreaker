@@ -32,7 +32,7 @@ class Block(var posX: Int, var posY: Int, var width: Int, var height: Int, color
       for (j <- 0 until colonne) {
         val x = margeX + j * (blockWidth + espace)
         val y = startY - i * (blockHeight + espace)
-        blocks += new Block(x.toInt, y.toInt, blockHeight, blockWidth.toInt, Color.RED)
+        blocks += new Block(x.toInt, y, blockHeight, blockWidth.toInt, Color.CYAN)
       }
     }
     blocks

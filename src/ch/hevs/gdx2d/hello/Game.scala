@@ -2,8 +2,7 @@ package ch.hevs.gdx2d.hello
 
 import ch.hevs.gdx2d.desktop.PortableApplication
 import ch.hevs.gdx2d.lib.GdxGraphics
-import com.badlogic.gdx.InputAdapter
-import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.{Gdx, Input, InputAdapter}
 import com.badlogic.gdx.graphics.Color
 
 import scala.collection.mutable.ArrayBuffer
@@ -16,21 +15,25 @@ object Game {
 
 class Game extends PortableApplication(1920, 1080) {
 
-  var window : Game = this
+  private val window: Game = this
 
-  val bar = new Bar(800, 100, 20, 250, Color.WHITE)
-  val block: ArrayBuffer[Block] = new Block(0, 0, 0, 0, Color.RED).generateBlocks()
+  private val bar = new Bar(1920/2, 100, 20, 250, Color.WHITE)
+  private val block: ArrayBuffer[Block] = new Block(0, 0, 0, 0, Color.RED).generateBlocks()
 
-  var balls: ArrayBuffer[Ball] = new ArrayBuffer
+  private val balls: ArrayBuffer[Ball] = new ArrayBuffer
   balls.addOne(new Ball(960, 540, 10, Color.RED))
 
   // timer declaration
-  var timer = new java.util.Timer()
+  private val timer = new java.util.Timer()
 
   override def onInit(): Unit = {
     Gdx.input.setInputProcessor(new InputAdapter {
       override def keyDown(keycode: Int): Boolean = {
         bar.onKeyDown(keycode)
+
+        if (keycode == Input.Keys.UP) {
+          balls.head.startBall()
+        }
         true
       }
 
@@ -42,9 +45,12 @@ class Game extends PortableApplication(1920, 1080) {
 
     // Timer instantiation
     val task = new java.util.TimerTask {
-      // Timer action at each interval
-      def run() = {
-        balls.foreach(ball => ball.updateBall(window.getWindowWidth, window.getWindowHeight))
+      def run(): Unit = {
+        balls.foreach(ball => {
+          ball.checkCollisionWithBar(bar)
+          ball.checkCollisionWithBlocks(block)
+          ball.updateBall(window.getWindowWidth, window.getWindowHeight, bar)
+        })
       }
     }
 
@@ -59,12 +65,12 @@ class Game extends PortableApplication(1920, 1080) {
     bar.updateBar()
     bar.draw(g)
 
-    //draw all blocks
-    for(i <- block){
+    // draw all blocks
+    for (i <- block) {
       i.draw(g)
     }
 
-    // Draw all balls
+    // draw all balls
     balls.foreach(ball => ball.draw(g))
   }
 }
