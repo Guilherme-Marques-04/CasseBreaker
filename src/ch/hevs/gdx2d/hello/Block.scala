@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.Color
 import scala.collection.mutable.ArrayBuffer
 
 
-class Block(var posX: Int, var posY: Int, var width: Int, var height: Int, color: Color) extends Drawable {
+class Block(var posX: Int, var posY: Int, var width: Int, var height: Int, color: Color) extends Drawable{
 
   override def draw(g: GdxGraphics): Unit = {
-    g.drawFilledRectangle(posX,posY, width+5, height+5, 90, Color.WHITE)
+    g.drawFilledRectangle(posX,posY, width+5, height+5, 90, Color.BLACK)
     g.drawFilledRectangle(posX, posY, width, height, 90, color)
   }
   def generateBlocks(): ArrayBuffer[Block] = {
@@ -17,7 +17,7 @@ class Block(var posX: Int, var posY: Int, var width: Int, var height: Int, color
 
     val colonne = 15
     val ligne = 8
-    val espace = 10
+    val espace = 0
     val margeX = 200
     val margeY = 100
     val blockHeight = 40
@@ -38,4 +38,3 @@ class Block(var posX: Int, var posY: Int, var width: Int, var height: Int, color
     blocks
   }
 }
-

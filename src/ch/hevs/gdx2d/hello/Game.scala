@@ -23,6 +23,8 @@ class Game extends PortableApplication(1920, 1080) {
   private val balls: ArrayBuffer[Ball] = new ArrayBuffer
   balls.addOne(new Ball(960, 540, 10, Color.RED))
 
+  private val bonus: ArrayBuffer[Block] = new Bonus().generatePositionBonus(block)
+
   // timer declaration
   private val timer = new java.util.Timer()
 
@@ -62,6 +64,7 @@ class Game extends PortableApplication(1920, 1080) {
     g.clear()
     g.drawFPS()
 
+
     bar.updateBar()
     bar.draw(g)
 
@@ -70,5 +73,8 @@ class Game extends PortableApplication(1920, 1080) {
 
     // draw all balls
     balls.foreach(ball => ball.draw(g))
+
+    //draw bonus block
+    bonus.toList.foreach(_.draw(g))
   }
 }

@@ -17,6 +17,7 @@ class Bar(var posX: Int, var posY: Int, var height: Int, var width: Int, var col
       posX += speed
   }
 
+  //Key pressed for the bar
   def onKeyDown(keycode: Int): Unit = {
     keycode match {
       case Input.Keys.LEFT => moveLeft = true
@@ -25,7 +26,7 @@ class Bar(var posX: Int, var posY: Int, var height: Int, var width: Int, var col
     }
   }
 
-
+  //Key unpressed for the bar
   def onKeyUp(keycode: Int): Unit = {
     keycode match {
       case Input.Keys.LEFT => moveLeft = false
