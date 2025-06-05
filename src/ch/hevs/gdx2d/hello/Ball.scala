@@ -99,15 +99,15 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
       var newVectorX: Int = 0
 
       val barCenter: Int = bar.posX
-      val barLimitRight: Int = bar.posX + bar.width/2
-      val barLimitLeft: Int = bar.posX - bar.width/2
+      val barLimitRight: Int = bar.posX + bar.width / 2
+      val barLimitLeft: Int = bar.posX - bar.width / 2
 
-      if(ballX >= barLimitLeft && ballX < barCenter){
-        newVectorX = (ballX - barCenter) * 5 / (bar.width/2 + 10) - 1
+      if (ballX >= barLimitLeft && ballX < barCenter) {
+        newVectorX = (ballX - barCenter) * 5 / (bar.width / 2 + 10) - 1
         println(s"1 $newVectorX, $ballX, $barLimitLeft, $barCenter")
-      } else if(ballX >= barCenter && ballX <= barLimitRight){
-        newVectorX = (ballX - barLimitRight) * (-5) / (bar.width/2 + 10)
-        newVectorX = 5-newVectorX
+      } else if (ballX >= barCenter && ballX <= barLimitRight) {
+        newVectorX = (ballX - barLimitRight) * (-5) / (bar.width / 2 + 10)
+        newVectorX = 5 - newVectorX
         println(s"2 $newVectorX")
       }
 
@@ -121,17 +121,27 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
   def checkCollisionWithBlocks(blocks: ArrayBuffer[Block]): Unit = {
     for (block <- blocks) {
       if (block.isEnable) {
-        var blockX : Int = (block.getX - (block.width / 2)).toInt
-        var blockY : Int = (block.getY - (block.height / 2)).toInt
+        var blockX: Int = (block.getX - (block.width / 2)).toInt
+        var blockY: Int = (block.getY - (block.height / 2)).toInt
 
-        var tempBlock : Block = new Block(blockX, blockY, block.width.toInt, block.height.toInt, block.color, true)
+        var tempBlock: Block = new Block(blockX, blockY, block.width.toInt, block.height.toInt, block.color, true)
 
         // Check collision with the block vertical
-        println(s"$ballX $ballY")
-        if (tempBlock.contains(ballX, ballY)) {
-          block.isEnable = false
-          block.color = Color.DARK_GRAY
-          dirVector = (dirVector._1, -dirVector._2)
+        if (ballX > blockX && ballX < block.x + block.width) {
+          if (tempBlock.contains(ballX, ballY)) {
+            block.isEnable = false
+            block.color = Color.DARK_GRAY
+            dirVector = (dirVector._1, -dirVector._2)
+          }
+        }
+
+        // Check collision with the block Horizontal
+        if (ballY > blockY && ballY < block.y + block.height) {
+          if (tempBlock.contains(ballX, ballY)) {
+            block.isEnable = false
+            block.color = Color.DARK_GRAY
+            dirVector = (-dirVector._1, dirVector._2)
+          }
         }
       }
     }
