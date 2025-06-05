@@ -65,7 +65,7 @@ class Game extends PortableApplication(1920, 1080) {
     bar.draw(g)
 
     // draw all blocks
-    blocks.toList.foreach(_.draw(g))
+    //blocks.toList.foreach(_.draw(g))
 
     // draw all balls
     balls.foreach(ball => ball.draw(g))
