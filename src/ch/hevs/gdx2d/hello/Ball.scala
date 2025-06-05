@@ -122,9 +122,14 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
   def checkCollisionWithBlocks(blocks: ArrayBuffer[Block]): Unit = {
     for (block <- blocks) {
       if (block.isEnable) {
+        var blockX : Int = (block.getX - (block.width / 2)).toInt
+        var blockY : Int = (block.getY - (block.height / 2)).toInt
 
-        // Check collision with the block
-        if (block.contains(ballX, ballY)) {
+        var tempBlock : Block = new Block(blockX, blockY, block.width.toInt, block.height.toInt, block.color, true)
+
+        // Check collision with the block vertical
+        println(s"$ballX $ballY")
+        if (tempBlock.contains(ballX, ballY)) {
           block.isEnable = false
           block.color = Color.DARK_GRAY
           dirVector = (dirVector._1, -dirVector._2)
