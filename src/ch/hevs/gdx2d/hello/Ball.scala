@@ -98,18 +98,17 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
       // By default 0 => the ball is going left
       var newVectorX: Int = 0
 
-      val barDiv: Int = bar.width/3
-      val barLeftStart: Int = bar.posX - bar.width/2
-      val barRightFinish: Int = bar.posX + bar.width/2
-      val leftLimit = bar.posX - barDiv/2
-      val rightLimit = bar.posX + barDiv/2
+      val barCenter: Int = bar.posX
+      val barLimitRight: Int = bar.posX + bar.width/2
+      val barLimitLeft: Int = bar.posX - bar.width/2
 
-      if (ballX >= barLeftStart && ballX < leftLimit) {
-        newVectorX = -5 // Gauche => envoie à gauche
-      } else if (ballX >= leftLimit && ballX < rightLimit) {
-        newVectorX = 0 // Milieu => envoie tout droit
-      } else if (ballX >= rightLimit && ballX <= barRightFinish) {
-        newVectorX = 5 // Droite => envoie à droite
+      if(ballX >= barLimitLeft && ballX < barCenter){
+        newVectorX = (ballX - barCenter) * 5 / (bar.width/2 + 10) - 1
+        println(s"1 $newVectorX, $ballX, $barLimitLeft, $barCenter")
+      } else if(ballX >= barCenter && ballX <= barLimitRight){
+        newVectorX = (ballX - barLimitRight) * (-5) / (bar.width/2 + 10)
+        newVectorX = 5-newVectorX
+        println(s"2 $newVectorX")
       }
 
       //change the direction of the ball
