@@ -126,21 +126,25 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
 
         var tempBlock: Block = new Block(blockX, blockY, block.width.toInt, block.height.toInt, block.color, true)
 
-        // Check collision with the block vertical
-        if (ballX > blockX && ballX < block.x + block.width) {
-          if (tempBlock.contains(ballX, ballY)) {
-            block.isEnable = false
-            block.color = Color.DARK_GRAY
-            dirVector = (dirVector._1, -dirVector._2)
+        if (ballX > blockX && ballX < block.x + block.width && ballY > blockY && ballY < block.y + block.height) {
+          // Check collision with the block vertical
+          if (ballX > blockX && ballX < block.x + block.width) {
+            println("Collision vertical")
+            if (tempBlock.contains(ballX, ballY)) {
+              block.isEnable = false
+              block.color = Color.DARK_GRAY
+              dirVector = (dirVector._1, -dirVector._2)
+            }
           }
-        }
 
-        // Check collision with the block Horizontal
-        if (ballY > blockY && ballY < block.y + block.height) {
-          if (tempBlock.contains(ballX, ballY)) {
-            block.isEnable = false
-            block.color = Color.DARK_GRAY
-            dirVector = (-dirVector._1, dirVector._2)
+          // Check collision with the block Horizontal
+          if (ballY > blockY && ballY < block.y + block.height) {
+            println("Collision Horizontal")
+            if (tempBlock.contains(ballX, ballY)) {
+              block.isEnable = false
+              block.color = Color.DARK_GRAY
+              dirVector = (-dirVector._1, dirVector._2)
+            }
           }
         }
       }

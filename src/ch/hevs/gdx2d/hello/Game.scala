@@ -18,7 +18,7 @@ object Game {
 class Game extends PortableApplication(1920, 1080) {
   private val window: Game = this
 
-  private val bar = new Bar(1920 / 2, 100, 20, 250, Color.WHITE)
+  private val bar = new Bar(1920 / 2, 100, 250, 20, Color.WHITE)
 
   private val balls: ArrayBuffer[Ball] = new ArrayBuffer
   balls.addOne(new Ball(0, 0, 10, Color.RED))
