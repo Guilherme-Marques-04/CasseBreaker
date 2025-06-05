@@ -19,9 +19,9 @@ class Bonus() {
     }
 
     //change the color of the bonus blocks
-//    for(b <- randomBlockBonus){
-//      blocks += new Block(b.posX, b.posY, b.width, b.height, Color.RED)
-//    }
+    for(b <- randomBlockBonus){
+      //blocks += new Block(b.posX, b.posY, b.width, b.height, Color.YELLOW)
+    }
     blocks
   }
 
