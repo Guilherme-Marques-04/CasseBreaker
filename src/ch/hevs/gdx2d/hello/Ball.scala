@@ -14,7 +14,7 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
   // Y-axis displacement value
   //    Positive value for up displacement
   //    Negative value for down displacement
-  private var dirVector: (Int, Int) = (0, 1)
+  private var dirVector: (Int, Int) = (0, 2)
 
   private var launched: Boolean = false
   private var lost: Boolean = false
@@ -60,7 +60,7 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
   def startBall(): Unit = {
     if (!launched) {
       launched = true
-      dirVector = (0, 1)
+      dirVector = (0, 10)
     }
   }
 
@@ -96,7 +96,7 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
       dirVector = (dirVector._1, -dirVector._2) // Change Y direction of the ball
 
       // By default 0 => the ball is going left
-      var newVectorX: Int = 0
+      //var newVectorX: Int = 0
 
       println(s"${ballX - bar.posX} >= 0 && ${ballX - bar.posX} <= ${bar.width / 3}")
 
@@ -113,36 +113,36 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
       //        println("Set newVectorX = 1\n")
       //      }
 
-      val leftLimit = bar.posX + bar.width / 3
-      val rightLimit = bar.posX + (bar.width * 2) / 3
-
-      if (ballX >= bar.posX && ballX < leftLimit) {
-        newVectorX = -1 // Gauche => envoie à gauche
-        println("Zone gauche -> newVectorX = -1")
-      } else if (ballX >= leftLimit && ballX < rightLimit) {
-        newVectorX = 0 // Milieu => envoie tout droit
-        println("Zone milieu -> newVectorX = 0")
-      } else if (ballX >= rightLimit && ballX <= bar.posX + bar.width) {
-        newVectorX = 1 // Droite => envoie à droite
-        println("Zone droite -> newVectorX = 1")
-      }
-
-
+//      val leftLimit = bar.width / 3
+//      val rightLimit = bar.width * 2 / 3
+//
+//      if (ballX - bar.posX >= 0 && ballX - bar.posX < leftLimit) {
+//        newVectorX = -1 // Gauche => envoie à gauche
+//        println("Zone gauche -> newVectorX = -1")
+//      } else if (ballX - bar.posX >= leftLimit && ballX - bar.posX < rightLimit) {
+//        newVectorX = 0 // Milieu => envoie tout droit
+//        println("Zone milieu -> newVectorX = 0")
+//      } else if (ballX - bar.posX >= rightLimit && ballX - bar.posX <= bar.width) {
+//        newVectorX = 1 // Droite => envoie à droite
+//        println("Zone droite -> newVectorX = 1")
+//      }
 
 
 
-      //      val difference: Double = (ballX - bar.posX).toDouble / (bar.width / 2)
-      //      val newVectorX: Int = (difference * 5).toInt
 
-      //      //calcul the new position of the ball
-      //      var correctedX: Int = newVectorX
-      //      if (newVectorX == 0) {
-      //        if (dirVector._1 >= 0) {
-      //          correctedX = 1
-      //        } else {
-      //          correctedX = -1
-      //        }
-      //      }
+
+            val difference: Double = (ballX - bar.posX).toDouble / (bar.width / 2)
+            val newVectorX: Int = (difference * 3).toInt
+
+            //calcul the new position of the ball
+            var correctedX: Int = newVectorX
+            if (newVectorX == 0) {
+              if (dirVector._1 >= 0) {
+                correctedX = 1
+              } else {
+                correctedX = -1
+              }
+            }
 
       //change the direction of the ball
       dirVector = (newVectorX, dirVector._2)
