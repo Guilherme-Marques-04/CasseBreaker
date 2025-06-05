@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color
 
 import scala.collection.mutable.ArrayBuffer
 
-class Ball(var posX: Int, var posY: Int, var radius: Int, var color: Color) extends Drawable {
+class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) extends Drawable {
   // First value:
   // X-axis displacement value
   //    Positive value for right displacement
@@ -14,7 +14,7 @@ class Ball(var posX: Int, var posY: Int, var radius: Int, var color: Color) exte
   // Y-axis displacement value
   //    Positive value for up displacement
   //    Negative value for down displacement
-  private var vector: (Int, Int) = (1, 1)
+  private var dirVector: (Int, Int) = (0, 1)
 
   private var launched: Boolean = false
   private var lost: Boolean = false
@@ -22,55 +22,55 @@ class Ball(var posX: Int, var posY: Int, var radius: Int, var color: Color) exte
   // Ball displacement
   def updateBall(width: Int, height: Int, bar: Bar): Unit = {
     if (!launched) {
-      posX = bar.posX
-      posY = bar.posY + bar.height / 2 + radius + 1
+      ballX = bar.posX
+      ballY = bar.posY + bar.height / 2 + radius + 1
       return
     }
 
-    if (posY - radius <= 0) {
+    if (ballY - radius <= 0) {
       lost = true
       launched = false
-      vector = (0, 0)
+      dirVector = (0, 0)
       return
     }
 
     //top side intersection
-    if (posY + radius >= height) {
-      vector = (vector._1, -vector._2)
-      posY = height - radius - 1
+    if (ballY + radius >= height) {
+      dirVector = (dirVector._1, -dirVector._2)
+      ballY = height - radius - 1
     }
 
     //left side intersection
-    if (posX - radius <= 0) {
-      vector = (-vector._1, vector._2)
-      posX = radius + 1
+    if (ballX - radius <= 0) {
+      dirVector = (-dirVector._1, dirVector._2)
+      ballX = radius + 1
     }
 
     //right side intersection
-    if (posX + radius >= width) {
-      vector = (-vector._1, vector._2)
-      posX = width - radius - 1
+    if (ballX + radius >= width) {
+      dirVector = (-dirVector._1, dirVector._2)
+      ballX = width - radius - 1
     }
 
-    posX += vector._1
-    posY += vector._2
+    ballX += dirVector._1
+    ballY += dirVector._2
   }
 
   //Launch the ball
   def startBall(): Unit = {
     if (!launched) {
       launched = true
-      vector = (0, 1)
+      dirVector = (0, 1)
     }
   }
 
   //Check collision with the bar
   def checkCollisionWithBar(bar: Bar): Unit = {
     //calcul position ball
-    val ballBottom: Int = posY - radius
-    val ballTop: Int = posY + radius
-    val ballLeft: Int = posX - radius
-    val ballRight: Int = posX + radius
+    val ballBottom: Int = ballY - radius
+    val ballTop: Int = ballY + radius
+    val ballLeft: Int = ballX - radius
+    val ballRight: Int = ballX + radius
 
     //position bar
     val barLeft: Int = bar.posX - bar.width / 2
@@ -91,53 +91,81 @@ class Ball(var posX: Int, var posY: Int, var radius: Int, var color: Color) exte
     }
 
     //change the direction of the ball
-    if (intersectX && intersectY && vector._2 < 0) {
-      vector = (vector._1, -vector._2)
+    // If the ball intersect the bar in X and Y and the dirVector is negative (going down)
+    if (intersectX && intersectY && dirVector._2 < 0) {
+      dirVector = (dirVector._1, -dirVector._2) // Change Y direction of the ball
 
-      val difference: Double = (posX - bar.posX).toDouble / (bar.width / 2)
-      val newVectorX: Int = (difference * 5).toInt
+      // By default 0 => the ball is going left
+      var newVectorX: Int = 0
 
-      //calcul the new position of the ball
-      var correctedX: Int = newVectorX
-      if (newVectorX == 0) {
-        if (vector._1 >= 0) {
-          correctedX = 1
-        } else {
-          correctedX = -1
-        }
+      println(s"${ballX - bar.posX} >= 0 && ${ballX - bar.posX} <= ${bar.width / 3}")
+
+      //      if (bar.posX - ballX >= 0 && bar.posX - ballX < bar.width / 3) {
+      //        newVectorX = -1
+      //        println("Set newVectorX = -1\n")
+      //      } else if (bar.posX - ballX >= (bar.posX + bar.width) / 3 && bar.posX - ballX < (bar.posX + bar.width) * 2 / 3) {
+      //        newVectorX = 0
+      //        println(s"$ballX > ${bar.posX} + ${bar.width} / 3} && $ballX <= (${bar.posX} + ${bar.width}) * 2 / 3")
+      //        println("Set newVectorX = 0\n")
+      //      } else if (ballX >= (bar.posX + bar.width) * 2 / 3 && ballX <= bar.posX + bar.width) {
+      //        newVectorX = 1
+      //        println(s"$ballX >= (${bar.posX} + ${bar.width}) * 2 / 3 && $ballX <= ${bar.posX} + ${bar.width}")
+      //        println("Set newVectorX = 1\n")
+      //      }
+
+      val leftLimit = bar.posX + bar.width / 3
+      val rightLimit = bar.posX + (bar.width * 2) / 3
+
+      if (ballX >= bar.posX && ballX < leftLimit) {
+        newVectorX = -1 // Gauche => envoie à gauche
+        println("Zone gauche -> newVectorX = -1")
+      } else if (ballX >= leftLimit && ballX < rightLimit) {
+        newVectorX = 0 // Milieu => envoie tout droit
+        println("Zone milieu -> newVectorX = 0")
+      } else if (ballX >= rightLimit && ballX <= bar.posX + bar.width) {
+        newVectorX = 1 // Droite => envoie à droite
+        println("Zone droite -> newVectorX = 1")
       }
 
+
+
+
+
+      //      val difference: Double = (ballX - bar.posX).toDouble / (bar.width / 2)
+      //      val newVectorX: Int = (difference * 5).toInt
+
+      //      //calcul the new position of the ball
+      //      var correctedX: Int = newVectorX
+      //      if (newVectorX == 0) {
+      //        if (dirVector._1 >= 0) {
+      //          correctedX = 1
+      //        } else {
+      //          correctedX = -1
+      //        }
+      //      }
+
       //change the direction of the ball
-      vector = (correctedX, vector._2)
-      posY = barTop + radius + 1
+      dirVector = (newVectorX, dirVector._2)
+      ballY = barTop + radius + 1
     }
   }
 
-  //Check collision with blocks ToDo
-  def checkCollisionWithBlocks(block: ArrayBuffer[Block]): Unit = {
-    val ballLeft: Int = posX - radius
-    val ballRight: Int = posX + radius
-    val ballTop: Int = posY + radius
-    val ballBottom: Int = posY - radius
+  //Check collision with blocks
+  def checkCollisionWithBlocks(blocks: ArrayBuffer[Block]): Unit = {
+    for (block <- blocks) {
+      if (block.isEnable) {
 
-    val removeBlock = new ArrayBuffer[Block]()
-
-    for(b <- block){
-      val blockLeft: Int = b.posX - b.width
-      val blockRight: Int = b.posX + b.width
-      val blockTop: Int = b.posY + b.height
-      val blockBottom: Int = b.posY - b.height
+        // Check collision with the block
+        if (block.contains(ballX, ballY)) {
+          block.isEnable = false
+          block.color = Color.DARK_GRAY
+          dirVector = (dirVector._1, -dirVector._2)
+        }
+      }
     }
-
-
-
-
-
-
-
   }
 
   override def draw(g: GdxGraphics): Unit = {
-    g.drawFilledCircle(posX, posY, radius, color)
+    g.drawFilledCircle(ballX, ballY, radius, color)
   }
 }

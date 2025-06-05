@@ -1,6 +1,7 @@
 package ch.hevs.gdx2d.hello
 
 import ch.hevs.gdx2d.desktop.PortableApplication
+import ch.hevs.gdx2d.hello.Block.blocks
 import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.{Gdx, Input, InputAdapter}
 import com.badlogic.gdx.graphics.Color
@@ -14,16 +15,14 @@ object Game {
 }
 
 class Game extends PortableApplication(1920, 1080) {
-
   private val window: Game = this
 
   private val bar = new Bar(1920/2, 100, 20, 250, Color.WHITE)
-  private val block: ArrayBuffer[Block] = new Block(0, 0, 0, 0, Color.RED).generateBlocks()
 
   private val balls: ArrayBuffer[Ball] = new ArrayBuffer
-  balls.addOne(new Ball(960, 540, 10, Color.RED))
+  balls.addOne(new Ball(0, 0, 10, Color.RED))
 
-  // timer declaration
+  // timer declaration ToDo Remove timer
   private val timer = new java.util.Timer()
 
   override def onInit(): Unit = {
@@ -43,18 +42,18 @@ class Game extends PortableApplication(1920, 1080) {
       }
     })
 
-    // Timer instantiation
+    // Timer instantiation ToDo Remove timer
     val task = new java.util.TimerTask {
       def run(): Unit = {
         balls.foreach(ball => {
           ball.checkCollisionWithBar(bar)
-          ball.checkCollisionWithBlocks(block)
+          //ball.checkCollisionWithBlocks(blocks)
           ball.updateBall(window.getWindowWidth, window.getWindowHeight, bar)
         })
       }
     }
 
-    // timer
+    // timer ToDo Remove timer
     timer.schedule(task, 2L, 2L)
   }
 
@@ -66,7 +65,7 @@ class Game extends PortableApplication(1920, 1080) {
     bar.draw(g)
 
     // draw all blocks
-    block.toList.foreach(_.draw(g))
+    blocks.toList.foreach(_.draw(g))
 
     // draw all balls
     balls.foreach(ball => ball.draw(g))

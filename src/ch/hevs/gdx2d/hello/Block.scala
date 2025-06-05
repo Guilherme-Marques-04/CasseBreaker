@@ -2,22 +2,19 @@ package ch.hevs.gdx2d.hello
 
 import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.Rectangle
 
 import scala.collection.mutable.ArrayBuffer
 
+object Block {
+  var blocks: ArrayBuffer[Block] = Block.generateBlocks()
 
-class Block(var posX: Int, var posY: Int, var width: Int, var height: Int, color: Color) extends Drawable {
-
-  override def draw(g: GdxGraphics): Unit = {
-    g.drawFilledRectangle(posX,posY, width+5, height+5, 90, Color.WHITE)
-    g.drawFilledRectangle(posX, posY, width, height, 90, color)
-  }
   def generateBlocks(): ArrayBuffer[Block] = {
     val blocks = ArrayBuffer[Block]()
-
+    val color : Color = Color.RED
     val colonne = 15
     val ligne = 8
-    val espace = 10
+    val espace = 0
     val margeX = 200
     val margeY = 100
     val blockHeight = 40
@@ -32,10 +29,19 @@ class Block(var posX: Int, var posY: Int, var width: Int, var height: Int, color
       for (j <- 0 until colonne) {
         val x = margeX + j * (blockWidth + espace)
         val y = startY - i * (blockHeight + espace)
-        blocks += new Block(x.toInt, y, blockHeight, blockWidth.toInt, Color.CYAN)
+        blocks += new Block(x.toInt, y, blockHeight, blockWidth.toInt, Color.CYAN, true)
       }
     }
     blocks
+  }
+}
+
+class Block( posX: Int, posY: Int, w: Int, h: Int, var color: Color, var isEnable : Boolean) extends Rectangle(posX, posY, w, h) with Drawable {
+  override def draw(g: GdxGraphics): Unit = {
+    if (isEnable) {
+      g.drawFilledRectangle(x,y,width+5, height+5, 90, Color.WHITE)
+      g.drawFilledRectangle(x,y, width, height, 90, color)
+    }
   }
 }
 

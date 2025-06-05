@@ -28,5 +28,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="scala-sdk-2.13.14" level="project" />
+    <orderEntry type="library" name="scala-sdk-2.13.15" level="application" />
   </component>
 </module>
