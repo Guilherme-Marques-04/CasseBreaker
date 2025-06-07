@@ -11,9 +11,9 @@ class Bar(var posX: Int, var posY: Int, var width: Int, var height: Int, var col
 
   //update position
   def updateBar(): Unit = {
-    if (moveLeft && posX > 0 + height/2)
+    if (moveLeft && posX > 0 + width/2)
       posX -= speedMult
-    else if (moveRight && posX < 1920 - height/2)
+    else if (moveRight && posX < 1920 - width/2)
       posX += speedMult
   }
 
