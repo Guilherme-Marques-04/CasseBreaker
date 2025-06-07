@@ -119,37 +119,45 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
 
   //Check collision with blocks
   def checkCollisionWithBlocks(blocks: ArrayBuffer[Block]): Unit = {
-    for (block <- blocks) {
-      if (block.isEnable) {
-        var blockX: Int = (block.getX - (block.width / 2)).toInt
-        var blockY: Int = (block.getY - (block.height / 2)).toInt
+  for (block <- blocks if block.isEnable) {
+    // Posision block
+    val blockLeft = block.getX - block.width / 2
+    val blockRight = block.getX + block.width / 2
+    val blockTop = block.getY - block.height / 2
+    val blockBottom = block.getY + block.height / 2
 
-        var tempBlock: Block = new Block(blockX, blockY, block.width.toInt, block.height.toInt, block.color, true)
+    // Vérifie si la balle est dans la zone du bloc
+    if (ballX >= blockLeft && ballX <= blockRight &&
+        ballY >= blockTop && ballY <= blockBottom) {
 
-        if (ballX > blockX && ballX < block.x + block.width && ballY > blockY && ballY < block.y + block.height) {
-          // Check collision with the block vertical
-          if (ballX > blockX && ballX < block.x + block.width) {
-            println("Collision vertical")
-            if (tempBlock.contains(ballX, ballY)) {
-              block.isEnable = false
-              block.color = Color.DARK_GRAY
-              dirVector = (dirVector._1, -dirVector._2)
-            }
-          }
+      // Calcul des distances de colission
+      val overlapLeft = ballX - blockLeft
+      val overlapRight = blockRight - ballX
+      val overlapTop = ballY - blockTop
+      val overlapBottom = blockBottom - ballY
 
-          // Check collision with the block Horizontal
-          if (ballY > blockY && ballY < block.y + block.height) {
-            println("Collision Horizontal")
-            if (tempBlock.contains(ballX, ballY)) {
-              block.isEnable = false
-              block.color = Color.DARK_GRAY
-              dirVector = (-dirVector._1, dirVector._2)
-            }
-          }
-        }
+      // Trouve la plus petite distance pour savoir la direction de la collision
+      val minOverlapX = Math.min(overlapLeft, overlapRight)
+      val minOverlapY = Math.min(overlapTop, overlapBottom)
+
+      // Rebonds
+      if (minOverlapX < minOverlapY) {
+        // Collision horizontale (gauche/droite)
+        dirVector = (-dirVector._1, dirVector._2)
+        println("Collision horizontale")
+      } else {
+        // Collision verticale (haut/bas)
+        dirVector = (dirVector._1, -dirVector._2)
+        println("Collision verticale")
       }
+
+      // Desactiver le bloc
+      block.isEnable = false
+      block.color = Color.DARK_GRAY
     }
   }
+}
+
 
   override def draw(g: GdxGraphics): Unit = {
     g.drawFilledCircle(ballX, ballY, radius, color)
