@@ -16,8 +16,8 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
   //    Negative value for down displacement
   private var dirVector: (Int, Int) = (0, 1)
 
-  private var launched: Boolean = false
-  private var lost: Boolean = false
+   var launched: Boolean = false
+   var lost: Boolean = false
 
   // Ball displacement
   def updateBall(width: Int, height: Int, bar: Bar): Unit = {
@@ -102,13 +102,11 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
       val barLimitRight: Int = bar.posX + bar.width / 2
       val barLimitLeft: Int = bar.posX - bar.width / 2
 
-      if (ballX >= barLimitLeft && ballX < barCenter) {
-        newVectorX = (ballX - barCenter) * 5 / (bar.width / 2 + 10) - 1
-        println(s"1 $newVectorX, $ballX, $barLimitLeft, $barCenter")
-      } else if (ballX >= barCenter && ballX <= barLimitRight) {
-        newVectorX = (ballX - barLimitRight) * (-5) / (bar.width / 2 + 10)
-        newVectorX = 5 - newVectorX
-        println(s"2 $newVectorX")
+      if(ballX >= barLimitLeft-10 && ballX < barCenter){
+        newVectorX = (ballX - barCenter) * 5 / (bar.width/2) - 1
+      } else if(ballX >= barCenter && ballX <= barLimitRight){
+        newVectorX = (ballX - barLimitRight) * (-5) / (bar.width/2)
+        newVectorX = 5-newVectorX
       }
 
       //change the direction of the ball
@@ -118,7 +116,7 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
   }
 
   //Check collision with blocks
-  def checkCollisionWithBlocks(blocks: ArrayBuffer[Block]): Unit = {
+  def checkCollisionWithBlocks(blocks: ArrayBuffer[Block], bar:Bar, bonus: Bonus): Unit = {
   for (block <- blocks if block.isEnable) {
     // Posision block
     val blockLeft = block.getX - block.width / 2
@@ -154,10 +152,22 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
       // Desactiver le bloc
       block.isEnable = false
       block.color = Color.DARK_GRAY
+
+      // Check if the block is a bonus
+      if(block.isBonus){
+        bonus.increaseSizeBar(bar)
+      }
     }
   }
 }
 
+  def reset(bar: Bar): Unit = {
+    launched = false
+    lost = false
+    dirVector = (0,0)
+    ballX = bar.posX
+    ballY = bar.posY + bar.height / 2 + radius + 1
+  }
 
   override def draw(g: GdxGraphics): Unit = {
     g.drawFilledCircle(ballX, ballY, radius, color)

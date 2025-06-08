@@ -29,14 +29,14 @@ object Block {
       for (j <- 0 until colonne) {
         val x = margeX + j * (blockWidth + espace)
         val y = startY - i * (blockHeight + espace)
-        blocks += new Block(x.toInt, y, blockWidth.toInt, blockHeight, Color.CYAN, true)
+        blocks += new Block(x.toInt, y, blockWidth.toInt, blockHeight, Color.CYAN, true, false)
       }
     }
     blocks
   }
 }
 
-class Block(posX: Int, posY: Int, w: Int, h: Int, var color: Color, var isEnable: Boolean) extends Rectangle(posX, posY, w, h) with Drawable {
+class Block(posX: Int, posY: Int, w: Int, h: Int, var color: Color, var isEnable: Boolean, var isBonus: Boolean) extends Rectangle(posX, posY, w, h) with Drawable {
   override def draw(g: GdxGraphics): Unit = {
     if (isEnable) {
       g.drawFilledRectangle(x, y, width, height, 0, Color.WHITE)
