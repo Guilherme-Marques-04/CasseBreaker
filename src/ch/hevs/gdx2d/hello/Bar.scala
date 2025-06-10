@@ -4,7 +4,7 @@ import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 
-class Bar(var posX: Int, var posY: Int, var width: Int, var height: Int, var color: Color) extends Drawable {
+class Bar(private var posX: Int, private var posY: Int, private var width: Int, private var height: Int, private var color: Color) extends Drawable {
   private var moveLeft: Boolean = false
   private var moveRight: Boolean = false
   private var speedMult: Int = 20
@@ -40,5 +40,27 @@ class Bar(var posX: Int, var posY: Int, var width: Int, var height: Int, var col
   //draw bar
   override def draw(g: GdxGraphics): Unit = {
     g.drawFilledRectangle(posX , posY, width, height, 0, color)
+  }
+
+  // Get the position X of the bar
+  def getPosX() : Int = {
+    return posX
+  }
+
+  // Get the position Y of the bar
+  def getPosY() : Int = {
+    return posY
+  }
+
+  def getHeight() : Int = {
+    return height
+  }
+
+  def getWidth() : Int = {
+    return width
+  }
+
+  def setWidth(w : Int) = {
+    width = w
   }
 }
