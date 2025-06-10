@@ -1,5 +1,6 @@
 package ch.hevs.gdx2d.hello
 
+import ch.hevs.gdx2d.components.audio.MusicPlayer
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage
 import ch.hevs.gdx2d.desktop.PortableApplication
 import ch.hevs.gdx2d.hello.Block.blocks
@@ -26,26 +27,36 @@ class Game extends PortableApplication(1920, 1080) {
   private val bonus: Bonus = new Bonus()
 
   private var background: BitmapImage = _
+  var music: MusicPlayer = _
 
   private val balls: ArrayBuffer[Ball] = new ArrayBuffer
   balls.addOne(new Ball(0, 0, 10, Color.RED))
 
   private var lives: Int = 3
 
+  def restartGame(): Unit = {
+    lives = 3
+    bar.reset()
+    balls.clear()
+    balls.addOne(new Ball(0, 0, 10, Color.RED))
+    Block.resetBlocks()
+    bonus.generatePositionBonus(Block.blocks)
+  }
 
-  override def onInit(): Unit = {
-
-    bonus.generatePositionBonus(blocks)
-
-    background = new BitmapImage("data/images/spongebob.png")
-
+  //Input key
+  def setInput(): Unit = {
     Gdx.input.setInputProcessor(new InputAdapter {
       override def keyDown(keycode: Int): Boolean = {
         bar.onKeyDown(keycode)
 
-        if (keycode == Input.Keys.UP) {
+        if (keycode == Input.Keys.UP && lives > 0) {
           balls.head.startBall()
         }
+
+        if (lives <= 0 && (keycode == Input.Keys.SPACE || keycode == Input.Keys.ENTER)) {
+          restartGame()
+        }
+
         true
       }
 
@@ -56,13 +67,32 @@ class Game extends PortableApplication(1920, 1080) {
     })
   }
 
+  override def onInit(): Unit = {
+
+    //generate bonus
+    bonus.generatePositionBonus(blocks)
+
+    //background image
+    background = new BitmapImage("data/images/spongebob.png")
+
+    //music
+    music = new MusicPlayer("data/musiques/music.mp3")
+    music.loop()
+
+    setInput()
+  }
+
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear()
     g.drawFPS()
+
+    //draw background
     g.drawPicture(g.getScreenWidth / 2, g.getScreenHeight / 2, background)
 
-
+    //update the bar
     bar.updateBar()
+
+    //draw the bar
     bar.draw(g)
 
     //draw all blocks
@@ -86,13 +116,16 @@ class Game extends PortableApplication(1920, 1080) {
       })
     }
 
-    for(i <- 0 until lives){
+    //draw lives
+    for(i <- 0 until lives) {
       val x = 30 + i * 40
       val y = 1040
-      g.drawFilledCircle(x,y,15,Color.RED)
+      g.drawFilledCircle(x, y, 15, Color.RED)
     }
-    if(lives <= 0) {
-      g.drawStringCentered(g.getScreenHeight / 2, "Game Over")
+
+    //Set text when you have 0 live
+    if (lives <= 0) {
+      g.drawStringCentered(g.getScreenHeight / 2, "Press enter to restart")
     }
   }
 }

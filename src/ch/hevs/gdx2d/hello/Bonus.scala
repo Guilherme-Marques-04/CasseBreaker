@@ -24,9 +24,11 @@ class Bonus() {
 
   //Bonus can increase the size bar
   def increaseSizeBar(bar: Bar): Unit = {
-    bar.width = (bar.width *1.2).toInt
+    bar.width = (bar.width + 10).toInt
   }
 
   //Bonus add one ball
-  def addBall(): Unit = ???
+  def addBall(): Unit = {
+
+  }
 }
