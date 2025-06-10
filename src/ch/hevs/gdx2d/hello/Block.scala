@@ -9,9 +9,8 @@ import scala.collection.mutable.ArrayBuffer
 object Block {
   var blocks: ArrayBuffer[Block] = Block.generateBlocks()
 
-  def generateBlocks(): ArrayBuffer[Block] = {
+  private def generateBlocks(): ArrayBuffer[Block] = {
     val blocks = ArrayBuffer[Block]()
-    val color: Color = Color.RED
     val colonne = 15
     val ligne = 8
     val espace = 0
