@@ -37,6 +37,10 @@ class Bar(private var posX: Int, private var posY: Int, private var width: Int, 
     }
   }
 
+  def reset(): Unit = {
+    posX = 1920 / 2
+  }
+
   //draw bar
   override def draw(g: GdxGraphics): Unit = {
     g.drawFilledRectangle(posX , posY, width, height, 0, color)

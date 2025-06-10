@@ -18,7 +18,7 @@ object Block {
     val margeY = 100
     val blockHeight = 40
 
-    val totalWidth = 1920 - 2 * margeX
+    val totalWidth = 1920 - (2 * margeX /1.5).toInt
     val totalEspace = (colonne - 1) * espace / 2
     val blockWidth: Float = (totalWidth - totalEspace) / colonne
 
@@ -32,6 +32,12 @@ object Block {
       }
     }
     blocks
+  }
+
+  // reset blocks
+  def resetBlocks(): Unit = {
+    blocks.clear()
+    blocks ++= generateBlocks()
   }
 }
 

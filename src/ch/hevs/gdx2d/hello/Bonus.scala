@@ -28,5 +28,7 @@ class Bonus() {
   }
 
   //Bonus add one ball
-  def addBall(): Unit = ???
+  def addBall(): Unit = {
+
+  }
 }
