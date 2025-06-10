@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color
 
 import scala.collection.mutable.ArrayBuffer
 
-class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) extends Drawable {
+class Ball(private var ballX: Int, private var ballY: Int, private var radius: Int, private var color: Color) extends Drawable {
   // First value:
   // X-axis displacement value
   //    Positive value for right displacement
@@ -16,14 +16,14 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
   //    Negative value for down displacement
   private var dirVector: (Int, Int) = (0, 1)
 
-   var launched: Boolean = false
-   var lost: Boolean = false
+   private var launched: Boolean = false // If the ball is thrown from the bar
+   private var lost: Boolean = false // If the ball quit the screen
 
   // Ball displacement
   def updateBall(width: Int, height: Int, bar: Bar): Unit = {
     if (!launched) {
-      ballX = bar.posX
-      ballY = bar.posY + bar.height / 2 + radius + 1
+      ballX = bar.getPosX()
+      ballY = bar.getPosY() + bar.getHeight / 2 + radius + 1
       return
     }
 
@@ -73,10 +73,10 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
     val ballRight: Int = ballX + radius
 
     //position bar
-    val barLeft: Int = bar.posX - bar.width / 2
-    val barRight: Int = bar.posX + bar.width / 2
-    val barTop: Int = bar.posY + bar.height / 2
-    val barBottom: Int = bar.posY - bar.height / 2
+    val barLeft: Int = bar.getPosX() - bar.getWidth() / 2
+    val barRight: Int = bar.getPosX() + bar.getWidth() / 2
+    val barTop: Int = bar.getPosY() + bar.getHeight() / 2
+    val barBottom: Int = bar.getPosY() - bar.getHeight() / 2
 
     //check ball touch the side of the bar
     var intersectX: Boolean = false
@@ -98,14 +98,14 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
       // By default 0 => the ball is going left
       var newVectorX: Int = 0
 
-      val barCenter: Int = bar.posX
-      val barLimitRight: Int = bar.posX + bar.width / 2
-      val barLimitLeft: Int = bar.posX - bar.width / 2
+      val barCenter: Int = bar.getPosX()
+      val barLimitRight: Int = bar.getPosX() + bar.getWidth() / 2
+      val barLimitLeft: Int = bar.getPosX() - bar.getWidth() / 2
 
       if(ballX >= barLimitLeft-10 && ballX < barCenter){
-        newVectorX = (ballX - barCenter) * 5 / (bar.width/2) - 1
+        newVectorX = (ballX - barCenter) * 5 / (bar.getWidth()/2) - 1
       } else if(ballX >= barCenter && ballX <= barLimitRight){
-        newVectorX = (ballX - barLimitRight) * (-5) / (bar.width/2)
+        newVectorX = (ballX - barLimitRight) * (-5) / (bar.getWidth()/2)
         newVectorX = 5-newVectorX
       }
 
@@ -165,11 +165,15 @@ class Ball(var ballX: Int, var ballY: Int, var radius: Int, var color: Color) ex
     launched = false
     lost = false
     dirVector = (0,0)
-    ballX = bar.posX
-    ballY = bar.posY + bar.height / 2 + radius + 1
+    ballX = bar.getPosX()
+    ballY = bar.getPosY + bar.getHeight() / 2 + radius + 1
   }
 
   override def draw(g: GdxGraphics): Unit = {
     g.drawFilledCircle(ballX, ballY, radius, color)
+  }
+
+  def isLost() : Boolean = {
+    return lost
   }
 }

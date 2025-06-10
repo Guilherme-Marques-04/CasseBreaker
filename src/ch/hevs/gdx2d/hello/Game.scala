@@ -5,11 +5,8 @@ import ch.hevs.gdx2d.components.bitmaps.BitmapImage
 import ch.hevs.gdx2d.desktop.PortableApplication
 import ch.hevs.gdx2d.hello.Block.blocks
 import ch.hevs.gdx2d.lib.GdxGraphics
-import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.{Gdx, Input, InputAdapter}
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -109,7 +106,7 @@ class Game extends PortableApplication(1920, 1080) {
         ball.updateBall(window.getWindowWidth, window.getWindowHeight, bar)
 
         //Check if balls is lost
-        if (ball.lost && lives > 0) {
+        if (ball.isLost() && lives > 0) {
           lives -= 1
           ball.reset(bar)
         }
