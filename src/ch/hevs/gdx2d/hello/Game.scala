@@ -22,6 +22,7 @@ class Game extends PortableApplication(1920, 1080) {
   private val window: Game = this
   private val bar = new Bar(1920 / 2, 100, 250, 20, Color.WHITE)
   private val bonus: Bonus = new Bonus()
+  private var isIncreaseSizeBarEnable : Boolean = false
   private var background: BitmapImage = _
   private var endscreen: BitmapImage = _
   private var music: MusicPlayer = _
@@ -100,10 +101,9 @@ class Game extends PortableApplication(1920, 1080) {
     g.clear()
     g.drawFPS()
 
-
-
+    // At every second
     if (lastFrameTime.getSecond < LocalDateTime.now().getSecond) {
-      println("1 second later")
+      bar.bonusSizeBar() // If the bonus is activated, it decrease the time every second
     }
 
     lastFrameTime = LocalDateTime.now()

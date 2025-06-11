@@ -5,6 +5,7 @@ import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.graphics.Color
 
 import scala.collection.mutable.ArrayBuffer
+import scala.util.Random
 
 class Ball(private var ballX: Int, private var ballY: Int, private var radius: Int, private var color: Color) extends Drawable {
   // First value:
@@ -105,11 +106,9 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
 
       if(ballX >= barLimitLeft-10 && ballX < barCenter){
         newVectorX = (ballX - barCenter) * 5 / (bar.getWidth()/2) - 1
-        println(newVectorX)
       } else if(ballX >= barCenter && ballX <= barLimitRight){
-        newVectorX = (ballX - barLimitRight) * (-5) / (bar.getWidth()/2)
+        newVectorX = (ballX - barLimitRight) * -5 / (bar.getWidth()/2)
         newVectorX = 5-newVectorX
-        println(newVectorX)
       }
 
       //change the direction of the ball
@@ -156,10 +155,16 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
 
       // Check if the block is a bonus
       if(block.isBonus){
-        bonus.increaseSizeBar(bar)
-        bonus.addBall(balls, bar)
-        var musicEnd = new MusicPlayer("data/musiques/blockHitWow.mp3")
-        musicEnd.play()
+        var typeOfBonus = Random.nextInt(2)
+
+        typeOfBonus match {
+          case 0 =>
+            bonus.addBall(balls, bar)
+            println("Bonus : New ball")
+          case 1 =>
+            bar.activateBonusIncreaseSizeBar()
+            println("Bonus : Bar size increased for 10 seconds")
+        }
       }
     }
   }
