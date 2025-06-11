@@ -22,20 +22,6 @@ La barre devient plus large pendant quelques secondes, ce qui facilite la récup
 ### Balle supplémentaire
 Une nouvelle balle entre en jeu, accélérant la destruction des briques… mais augmentant aussi la difficultée !
 
-### Autres
-D'autres bonus seront ajouter au cours du projet.
-
-## Interface
-### Menu principal
-Dans le menu principal, vous avez deux possibilités :  
-1. **Jouer** : lance une partie.  
-2. **Quitter** : ferme le jeu.
-
-### Menu pause
-Dans le menu pause, vous avez deux options :  
-1. **Continuer** : reprend la partie en cours.  
-2. **Quitter** : ferme le jeu.
-
 ## Informations sur le logiciel
 
 ### Langage
