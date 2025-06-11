@@ -86,6 +86,8 @@ class Game extends PortableApplication(1920, 1080) {
   }
 
   override def onInit(): Unit = {
+    // Sets the window title
+		setTitle("CasseBreaker");
 
     //generate bonus
     bonus.generatePositionBonus(blocks)
