@@ -9,7 +9,7 @@ import com.badlogic.gdx.{Gdx, Input, InputAdapter}
 import com.badlogic.gdx.graphics.Color
 
 import scala.collection.mutable.ArrayBuffer
-import java.time.{LocalDate, LocalDateTime}
+import java.time.LocalDateTime
 
 object Game {
   def main(args: Array[String]): Unit = {
@@ -20,22 +20,27 @@ object Game {
 class Game extends PortableApplication(1920, 1080) {
 
   private val window: Game = this
+
   private val bar = new Bar(1920 / 2, 100, 250, 20, Color.WHITE)
-  private val bonus: Bonus = new Bonus()
-  private var isIncreaseSizeBarEnable : Boolean = false
-  private var background: BitmapImage = _
+  private val bonus: Bonus = new Bonus() // contains all bonus
+
+  private var background: BitmapImage = _ // Background file path
+
+  // Contains all game balls
   private var endscreen: BitmapImage = _
-  private var music: MusicPlayer = _
+  private var music: MusicPlayer = _ // Var to store the path to the music file
   private var endMusic: MusicPlayer = _
   private var endMusicPlayed: Boolean = false
   private val balls: ArrayBuffer[Ball] = new ArrayBuffer
-  balls.addOne(new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED))
-  private var lives: Int = 3
-  private val toRemove = new ArrayBuffer[Ball]()
+  balls.addOne(new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED)) // Add 1st ball
 
-  private var lastFrameTime : LocalDateTime = LocalDateTime.now
+  private var lives: Int = 3 // Number of lives
 
-  // restart the game
+  val toRemove = new ArrayBuffer[Ball]() // Temporary table for storing loose bales
+
+  var lastFrameTime : LocalDateTime = LocalDateTime.now // Used to compare the time between frames
+
+  // Restart a new game
   def restartGame(): Unit = {
     lives = 3
     bar.reset()
@@ -71,6 +76,7 @@ class Game extends PortableApplication(1920, 1080) {
         if (lives <= 0 || allBlocksBroken() && (keycode == Input.Keys.SPACE || keycode == Input.Keys.ENTER)) {
           restartGame()
         }
+
         true
       }
 
@@ -103,9 +109,11 @@ class Game extends PortableApplication(1920, 1080) {
 
     // At every second
     if (lastFrameTime.getSecond < LocalDateTime.now().getSecond) {
-      bar.bonusSizeBar() // If the bonus is activated, it decrease the time every second
+      // If the bonus is activated, it decreases the time every second
+      bar.bonusSizeBar()
     }
 
+    // Saves the current frame time for the next pass
     lastFrameTime = LocalDateTime.now()
 
     //draw background
@@ -137,6 +145,7 @@ class Game extends PortableApplication(1920, 1080) {
           }
         }
 
+        // Remove all balls
         for (ball <- toRemove) {
           balls -= ball
         }
@@ -144,6 +153,9 @@ class Game extends PortableApplication(1920, 1080) {
         // Check if the game have more than one ball
         if (balls.isEmpty && lives > 0) {
           lives -= 1
+          music = new MusicPlayer("data/musiques/OhNo.mp3")
+          music.play()
+          ball.reset(bar)
           val newBall = new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED)
           balls += newBall
         }

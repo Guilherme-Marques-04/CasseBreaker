@@ -3,7 +3,6 @@ package ch.hevs.gdx2d.hello
 import ch.hevs.gdx2d.components.audio.MusicPlayer
 import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.graphics.Color
-
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
@@ -126,43 +125,44 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
     val blockTop = block.getY - block.height / 2
     val blockBottom = block.getY + block.height / 2
 
-    // Vérifie si la balle est dans la zone du bloc
+    // Checks if the ball is in the block area
     if (ballX >= blockLeft && ballX <= blockRight &&
         ballY >= blockTop && ballY <= blockBottom) {
 
-      // Calcul des distances de colission
+      // Calculating colission distances
       val overlapLeft = ballX - blockLeft
       val overlapRight = blockRight - ballX
       val overlapTop = ballY - blockTop
       val overlapBottom = blockBottom - ballY
 
-      // Trouve la plus petite distance pour savoir la direction de la collision
+      // Find the smallest distance to determine the direction of collision
       val minOverlapX = Math.min(overlapLeft, overlapRight)
       val minOverlapY = Math.min(overlapTop, overlapBottom)
 
-      // Rebonds
+      // Bounces
       if (minOverlapX < minOverlapY) {
-        // Collision horizontale (gauche/droite)
+        // Horizontal collision (left/right)
         dirVector = (-dirVector._1, dirVector._2)
       } else {
-        // Collision verticale (haut/bas)
+        // Vertical collision (up/down)
         dirVector = (dirVector._1, -dirVector._2)
       }
 
-      // Desactiver le bloc
+      // Disable block
       block.isEnable = false
-      block.color = Color.DARK_GRAY
 
       // Check if the block is a bonus
       if(block.isBonus){
-        var typeOfBonus = Random.nextInt(2)
+        val typeOfBonus = Random.nextInt(2)
 
         typeOfBonus match {
+          // Adding a ball
           case 0 =>
             bonus.addBall(balls, bar)
             println("Bonus : New ball")
+          // Increase bar size for 10 sec
           case 1 =>
-            bar.activateBonusIncreaseSizeBar()
+            bar.enableSizeBonus()
             println("Bonus : Bar size increased for 10 seconds")
         }
       }
@@ -170,6 +170,7 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
   }
 }
 
+  // Default position of the ball
   def reset(bar: Bar): Unit = {
     launched = false
     lost = false
@@ -178,10 +179,12 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
     ballY = bar.getPosY + bar.getHeight() / 2 + radius + 1
   }
 
+  // Draw the ball
   override def draw(g: GdxGraphics): Unit = {
     g.drawFilledCircle(ballX, ballY, radius, color)
   }
 
+  // If the ball is lost
   def isLost(): Boolean = {
      lost
   }

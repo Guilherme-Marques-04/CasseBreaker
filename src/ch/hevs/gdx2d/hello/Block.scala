@@ -7,8 +7,9 @@ import com.badlogic.gdx.math.Rectangle
 import scala.collection.mutable.ArrayBuffer
 
 object Block {
-  var blocks: ArrayBuffer[Block] = Block.generateBlocks()
+  var blocks: ArrayBuffer[Block] = Block.generateBlocks() // Table containing all blocks
 
+  // Generate blocks
   private def generateBlocks(): ArrayBuffer[Block] = {
     val blocks = ArrayBuffer[Block]()
     val colonne = 15
@@ -34,7 +35,7 @@ object Block {
     blocks
   }
 
-  // reset blocks
+  // Reset blocks
   def resetBlocks(): Unit = {
     blocks.clear()
     blocks ++= generateBlocks()
@@ -42,6 +43,7 @@ object Block {
 }
 
 class Block(posX: Int, posY: Int, w: Int, h: Int, var color: Color, var isEnable: Boolean, var isBonus: Boolean) extends Rectangle(posX, posY, w, h) with Drawable {
+  // Draw blocks
   override def draw(g: GdxGraphics): Unit = {
     if (isEnable) {
       g.drawFilledRectangle(x, y, width, height, 0, Color.WHITE)
