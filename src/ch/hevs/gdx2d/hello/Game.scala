@@ -49,8 +49,6 @@ class Game extends PortableApplication(1920, 1080) {
     Block.resetBlocks()
     bonus.generatePositionBonus(Block.blocks)
     endMusicPlayed = false
-    music = new MusicPlayer("data/musiques/music.mp3")
-    music.loop()
   }
 
   //Check if all blocks are broken
