@@ -9,6 +9,7 @@ import com.badlogic.gdx.{Gdx, Input, InputAdapter}
 import com.badlogic.gdx.graphics.Color
 
 import scala.collection.mutable.ArrayBuffer
+import java.time.{LocalDate, LocalDateTime}
 
 object Game {
   def main(args: Array[String]): Unit = {
@@ -31,6 +32,8 @@ class Game extends PortableApplication(1920, 1080) {
 
   private var lives: Int = 3
   val toRemove = new ArrayBuffer[Ball]()
+
+  var lastFrameTime : LocalDateTime = LocalDateTime.now
 
   def restartGame(): Unit = {
     lives = 3
@@ -91,6 +94,14 @@ class Game extends PortableApplication(1920, 1080) {
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear()
     g.drawFPS()
+
+
+
+    if (lastFrameTime.getSecond < LocalDateTime.now().getSecond) {
+      println("1 second later")
+    }
+
+    lastFrameTime = LocalDateTime.now()
 
     //draw background
     g.drawPicture(g.getScreenWidth / 2, g.getScreenHeight / 2, background)
