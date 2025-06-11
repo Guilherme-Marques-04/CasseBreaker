@@ -5,7 +5,6 @@ import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
 class Bonus {
-
   //generate random block bonus
   def generatePositionBonus(blocks: ArrayBuffer[Block]): Unit = {
     var bonusCount = 0
@@ -19,11 +18,6 @@ class Bonus {
         bonusCount += 1
       }
     }
-  }
-
-  //Bonus can increase the size bar
-  def increaseSizeBar(bar: Bar): Unit = {
-    bar.setWidth((bar.getWidth * 1.2).toInt)
   }
 
   //Bonus add one ball

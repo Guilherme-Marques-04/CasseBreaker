@@ -8,6 +8,8 @@ class Bar(private var posX: Int, private var posY: Int, private var width: Int, 
   private var moveLeft: Boolean = false
   private var moveRight: Boolean = false
   private var speedMult: Int = 20
+  private var bonusIncreaseSizeBarActivated : Boolean = false
+  private var timeLeftOfBonusIncreaseSizeBar : Int = 0
 
   //update position
   def updateBar(): Unit = {
@@ -66,5 +68,27 @@ class Bar(private var posX: Int, private var posY: Int, private var width: Int, 
 
   def setWidth(w : Int) = {
     width = w
+  }
+
+  // Bonus section -------------------------------------------
+  def activateBonusIncreaseSizeBar() : Unit = {
+    if (!bonusIncreaseSizeBarActivated) {
+      setWidth(getWidth * 2) // Increase width of the bar
+      bonusIncreaseSizeBarActivated = true // Activate bonus
+    }
+    // Set time of bonus for 10 sec
+    timeLeftOfBonusIncreaseSizeBar = 10
+  }
+
+  def bonusSizeBar() : Unit = {
+    if (timeLeftOfBonusIncreaseSizeBar > 0 && bonusIncreaseSizeBarActivated) {
+      timeLeftOfBonusIncreaseSizeBar -= 1
+
+      if (timeLeftOfBonusIncreaseSizeBar == 0) {
+        bonusIncreaseSizeBarActivated = false
+        setWidth(getWidth / 2) // Decrease width of the bar
+      }
+      println(s"Time left of the bonus : $timeLeftOfBonusIncreaseSizeBar")
+    }
   }
 }
