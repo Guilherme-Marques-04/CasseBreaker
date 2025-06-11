@@ -48,20 +48,20 @@ class Bar(private var posX: Int, private var posY: Int, private var width: Int, 
 
   // Get the position X of the bar
   def getPosX() : Int = {
-    return posX
+    posX
   }
 
   // Get the position Y of the bar
   def getPosY() : Int = {
-    return posY
+    posY
   }
 
   def getHeight() : Int = {
-    return height
+    height
   }
 
   def getWidth() : Int = {
-    return width
+    width
   }
 
   def setWidth(w : Int) = {

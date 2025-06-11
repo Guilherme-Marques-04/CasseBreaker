@@ -104,9 +104,11 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
 
       if(ballX >= barLimitLeft-10 && ballX < barCenter){
         newVectorX = (ballX - barCenter) * 5 / (bar.getWidth()/2) - 1
+        println(newVectorX)
       } else if(ballX >= barCenter && ballX <= barLimitRight){
         newVectorX = (ballX - barLimitRight) * (-5) / (bar.getWidth()/2)
         newVectorX = 5-newVectorX
+        println(newVectorX)
       }
 
       //change the direction of the ball
@@ -116,7 +118,7 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
   }
 
   //Check collision with blocks
-  def checkCollisionWithBlocks(blocks: ArrayBuffer[Block], bar:Bar, bonus: Bonus): Unit = {
+  def checkCollisionWithBlocks(blocks: ArrayBuffer[Block], bar:Bar, bonus: Bonus, balls: ArrayBuffer[Ball]): Unit = {
   for (block <- blocks if block.isEnable) {
     // Posision block
     val blockLeft = block.getX - block.width / 2
@@ -156,6 +158,7 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
       // Check if the block is a bonus
       if(block.isBonus){
         bonus.increaseSizeBar(bar)
+        bonus.addBall(balls, bar)
       }
     }
   }
@@ -173,7 +176,7 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
     g.drawFilledCircle(ballX, ballY, radius, color)
   }
 
-  def isLost() : Boolean = {
-    return lost
+  def isLost(): Boolean = {
+     lost
   }
 }

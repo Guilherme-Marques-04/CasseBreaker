@@ -27,17 +27,27 @@ class Game extends PortableApplication(1920, 1080) {
   var music: MusicPlayer = _
 
   private val balls: ArrayBuffer[Ball] = new ArrayBuffer
-  balls.addOne(new Ball(0, 0, 10, Color.RED))
+  balls.addOne(new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED))
 
   private var lives: Int = 3
+  val toRemove = new ArrayBuffer[Ball]()
 
   def restartGame(): Unit = {
     lives = 3
     bar.reset()
     balls.clear()
-    balls.addOne(new Ball(0, 0, 10, Color.RED))
+    balls.addOne(new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED))
     Block.resetBlocks()
     bonus.generatePositionBonus(Block.blocks)
+  }
+
+  def allBlocksBroken(): Boolean = {
+    for (block <- blocks) {
+      if (block.isEnable) {
+        return false
+      }
+    }
+    true
   }
 
   //Input key
@@ -50,10 +60,9 @@ class Game extends PortableApplication(1920, 1080) {
           balls.head.startBall()
         }
 
-        if (lives <= 0 && (keycode == Input.Keys.SPACE || keycode == Input.Keys.ENTER)) {
+        if (lives <= 0 || allBlocksBroken() && (keycode == Input.Keys.SPACE || keycode == Input.Keys.ENTER)) {
           restartGame()
         }
-
         true
       }
 
@@ -98,17 +107,29 @@ class Game extends PortableApplication(1920, 1080) {
     //draw all balls
     balls.foreach(ball => ball.draw(g))
 
-    //Check if collisions
+    //Check collisions
     if(lives > 0) {
-      balls.foreach(ball => {
+      balls.toList.foreach(ball => {
         ball.checkCollisionWithBar(bar)
-        ball.checkCollisionWithBlocks(blocks,bar, bonus)
+        ball.checkCollisionWithBlocks(blocks,bar, bonus, balls)
         ball.updateBall(window.getWindowWidth, window.getWindowHeight, bar)
 
         //Check if balls is lost
-        if (ball.isLost() && lives > 0) {
+        for (ball <- balls) {
+          if (ball.isLost()) {
+            toRemove += ball
+          }
+        }
+
+        for (ball <- toRemove) {
+          balls -= ball
+        }
+
+        // Check if the game have more than one ball
+        if (balls.isEmpty && lives > 0) {
           lives -= 1
-          ball.reset(bar)
+          val newBall = new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED)
+          balls += newBall
         }
       })
     }
@@ -120,8 +141,10 @@ class Game extends PortableApplication(1920, 1080) {
       g.drawFilledCircle(x, y, 15, Color.RED)
     }
 
-    //Set text when you have 0 live
-    if (lives <= 0) {
+    //Set text when you have 0 live or win
+    if (allBlocksBroken()) {
+      g.drawStringCentered(g.getScreenHeight / 2, "You win ! Press enter to restart")
+    } else if (lives <= 0) {
       g.drawStringCentered(g.getScreenHeight / 2, "Press enter to restart")
     }
   }

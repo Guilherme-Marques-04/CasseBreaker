@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
-class Bonus() {
+class Bonus {
 
   //generate random block bonus
   def generatePositionBonus(blocks: ArrayBuffer[Block]): Unit = {
@@ -21,14 +21,15 @@ class Bonus() {
     }
   }
 
-
   //Bonus can increase the size bar
   def increaseSizeBar(bar: Bar): Unit = {
     bar.setWidth((bar.getWidth * 1.2).toInt)
   }
 
   //Bonus add one ball
-  def addBall(): Unit = {
-
+  def addBall(balls: ArrayBuffer[Ball], bar: Bar): Unit = {
+    val newBall = new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED)
+    newBall.startBall()
+    balls += newBall
   }
 }
