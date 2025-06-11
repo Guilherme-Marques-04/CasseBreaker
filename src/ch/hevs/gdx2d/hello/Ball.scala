@@ -1,5 +1,6 @@
 package ch.hevs.gdx2d.hello
 
+import ch.hevs.gdx2d.components.audio.MusicPlayer
 import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.graphics.Color
 
@@ -144,11 +145,9 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
       if (minOverlapX < minOverlapY) {
         // Collision horizontale (gauche/droite)
         dirVector = (-dirVector._1, dirVector._2)
-        println("Collision horizontale")
       } else {
         // Collision verticale (haut/bas)
         dirVector = (dirVector._1, -dirVector._2)
-        println("Collision verticale")
       }
 
       // Desactiver le bloc
@@ -159,6 +158,8 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
       if(block.isBonus){
         bonus.increaseSizeBar(bar)
         bonus.addBall(balls, bar)
+        var musicEnd = new MusicPlayer("data/musiques/blockHitWow.mp3")
+        musicEnd.play()
       }
     }
   }

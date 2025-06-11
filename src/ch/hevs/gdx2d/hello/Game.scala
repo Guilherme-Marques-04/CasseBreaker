@@ -18,23 +18,23 @@ object Game {
 }
 
 class Game extends PortableApplication(1920, 1080) {
+
   private val window: Game = this
-
   private val bar = new Bar(1920 / 2, 100, 250, 20, Color.WHITE)
-  private var vie: Int = 3
   private val bonus: Bonus = new Bonus()
-
   private var background: BitmapImage = _
-  var music: MusicPlayer = _
-
+  private var endscreen: BitmapImage = _
+  private var music: MusicPlayer = _
+  private var endMusic: MusicPlayer = _
+  private var endMusicPlayed: Boolean = false
   private val balls: ArrayBuffer[Ball] = new ArrayBuffer
   balls.addOne(new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED))
-
   private var lives: Int = 3
-  val toRemove = new ArrayBuffer[Ball]()
+  private val toRemove = new ArrayBuffer[Ball]()
 
-  var lastFrameTime : LocalDateTime = LocalDateTime.now
+  private var lastFrameTime : LocalDateTime = LocalDateTime.now
 
+  // restart the game
   def restartGame(): Unit = {
     lives = 3
     bar.reset()
@@ -42,8 +42,12 @@ class Game extends PortableApplication(1920, 1080) {
     balls.addOne(new Ball(bar.getPosX(), bar.getPosY() + bar.getHeight / 2 + 10, 10, Color.RED))
     Block.resetBlocks()
     bonus.generatePositionBonus(Block.blocks)
+    endMusicPlayed = false
+    music = new MusicPlayer("data/musiques/music.mp3")
+    music.loop()
   }
 
+  //Check if all blocks are broken
   def allBlocksBroken(): Boolean = {
     for (block <- blocks) {
       if (block.isEnable) {
@@ -83,6 +87,7 @@ class Game extends PortableApplication(1920, 1080) {
 
     //background image
     background = new BitmapImage("data/images/spongebob.png")
+    endscreen = new BitmapImage("data/images/endscreen.png")
 
     //music
     music = new MusicPlayer("data/musiques/music.mp3")
@@ -156,7 +161,14 @@ class Game extends PortableApplication(1920, 1080) {
     if (allBlocksBroken()) {
       g.drawStringCentered(g.getScreenHeight / 2, "You win ! Press enter to restart")
     } else if (lives <= 0) {
-      g.drawStringCentered(g.getScreenHeight / 2, "Press enter to restart")
+      g.drawPicture(g.getScreenWidth / 2, g.getScreenHeight / 2, endscreen)
+
+      if (!endMusicPlayed) {
+        music.stop()
+        endMusic = new MusicPlayer("data/musiques/moment.mp3")
+        endMusic.play()
+        endMusicPlayed = true
+      }
     }
   }
 }
