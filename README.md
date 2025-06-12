@@ -18,6 +18,7 @@ Le joueur contrôle une barre qui se déplace horizontalement ↔️.
 - La touche ⬅️ permet de déplacer la barre vers la gauche.  
 - La touche ➡️ permet de déplacer la barre vers la droite.
 - La touche ⬆️ afin de la propulser à nouveau en cas de perte de la balle.
+- La touche ```shift left``` permet d'augementer la vitesse de déplacement de la bar.
 - Après la fin d'une partie, appuyer sur la touche `↵` 
 
 ## Bonus
