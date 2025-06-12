@@ -2,6 +2,7 @@
 
 ## Description
 Jeu de casse-brique traditionnel, avec des bonus pour pimenter l’expérience de jeu.
+![2025-06-12_16h23_37](https://github.com/user-attachments/assets/a633badc-7f12-4bdd-87bc-3aa769d0b2c4)
 
 ## Gameplay
 
