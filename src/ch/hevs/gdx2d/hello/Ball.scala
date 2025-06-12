@@ -154,6 +154,8 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
       // Check if the block is a bonus
       if(block.isBonus){
         val typeOfBonus = Random.nextInt(2)
+        val musicBonus: MusicPlayer = new MusicPlayer("data/musiques/blockHitWow.mp3")
+        musicBonus.play()
 
         typeOfBonus match {
           // Adding a ball
