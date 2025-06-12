@@ -5,6 +5,32 @@ Jeu de casse-brique traditionnel, avec des bonus pour pimenter l’expérience d
 
 ![2025-06-12_16h23_37](https://github.com/user-attachments/assets/a633badc-7f12-4bdd-87bc-3aa769d0b2c4)
 
+## Structure
+```
+📁 <CasseBreaker>
+├── 📁 data
+│   ├── 📁 images
+|   |   ├── 📄 endscreen.png
+|   |   └── 📄 spongebob.png
+|   └── 📁 musiques
+|       ├── 📄 blockHitWow.mp3
+|       ├── 📄 bubble-pop.mp3
+|       ├── 📄 moment.mp3
+|       ├── 📄 music.mp3
+|       └── 📄 OhNo.mp3
+├── 📁 lib
+│   ├── 📄 gdx2d-desktop-1.2.2.jar 
+|   └── 📄 gdx2d-desktop-1.2.2-sources.jar
+└── 📁 src
+    └── 📁 ch.hevs.gdx2d.cassebreaker
+        ├── 📄 Ball.scala
+        ├── 📄 Bar.scala
+        ├── 📄 Block.scala
+        ├── 📄 Bonus.scala
+        ├── 📄 Drawable.scala
+        └── 📄 Game.scala
+```
+
 ## Gameplay
 
 ### But
