@@ -94,6 +94,8 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
     //change the direction of the ball
     // If the ball intersect the bar in X and Y and the dirVector is negative (going down)
     if (intersectX && intersectY && dirVector._2 < 0) {
+      val musicBouncing: MusicPlayer = new MusicPlayer("data/musiques/Bouncing.mp3")
+      musicBouncing.play()
       dirVector = (dirVector._1, -dirVector._2) // Change Y direction of the ball
 
       // By default 0 => the ball is going left
