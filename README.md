@@ -1,6 +1,4 @@
-<img src="https://github.com/user-attachments/assets/bf1dad6a-954b-4d29-88da-aa0ca47caec6" alt="Logo Casse Breaker" center-align="center">
-
-![Logo](https://github.com/user-attachments/assets/bf1dad6a-954b-4d29-88da-aa0ca47caec6)
+<img src="https://github.com/user-attachments/assets/bf1dad6a-954b-4d29-88da-aa0ca47caec6" alt="Logo Casse Breaker" style="text-align: center;">
 
 ## Description
 Jeu de casse-brique traditionnel, avec des bonus pour pimenter l’expérience de jeu.
