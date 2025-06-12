@@ -8,11 +8,15 @@ Jeu de casse-brique traditionnel, avec des bonus pour pimenter l’expérience d
 ### But
 Le but du jeu est de casser toutes les briques en faisant rebondir la balle avec une barre mobile, contrôlée par le joueur.  
 Pendant la partie, des bonus apparaîtront au fur et à mesure pour enrichir le gameplay.
+Vous avez 3 vies à chaque partie pour essayer de gagner la partie.
+En cas de perte de la balle, celle-ci réapparaîtra automatiquement sur la barre. Pour reprendre la partie, appuyez sur la touche ⬆️ afin de la propulser à nouveau.
 
 ### Contrôles
 Le joueur contrôle une barre qui se déplace horizontalement ↔️.
 - La touche ⬅️ permet de déplacer la barre vers la gauche.  
 - La touche ➡️ permet de déplacer la barre vers la droite.
+- La touche ⬆️ afin de la propulser à nouveau en cas de perte de la balle.
+- Après la fin d'une partie, appuyer sur la touche `R` puis sur la toche `↵` 
 
 ## Bonus
 
