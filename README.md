@@ -16,7 +16,7 @@ Le joueur contrôle une barre qui se déplace horizontalement ↔️.
 - La touche ⬅️ permet de déplacer la barre vers la gauche.  
 - La touche ➡️ permet de déplacer la barre vers la droite.
 - La touche ⬆️ afin de la propulser à nouveau en cas de perte de la balle.
-- Après la fin d'une partie, appuyer sur la touche `R` puis sur la toche `↵` 
+- Après la fin d'une partie, appuyer sur la touche `↵` 
 
 ## Bonus
 
@@ -33,3 +33,8 @@ Ce jeu a été développé en **Scala**, avec la librairie **gdx2d** pour la par
 
 ### Résolution
 La fenêtre utilise une résolution fixe de 1920x1080 qui ne peut pas être modifiée.
+
+# Gameplay
+https://github.com/user-attachments/assets/75d2b43e-9a3d-4a09-8f80-c589a280fbd5
+
+
