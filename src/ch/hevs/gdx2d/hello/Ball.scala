@@ -167,6 +167,9 @@ class Ball(private var ballX: Int, private var ballY: Int, private var radius: I
             bar.enableSizeBonus()
             println("Bonus : Bar size increased for 10 seconds")
         }
+      } else {
+        val musicBlockDestruction: MusicPlayer = new MusicPlayer("data/musiques/bubble-pop.mp3")
+        musicBlockDestruction.play()
       }
     }
   }
